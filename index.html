@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankur's Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            text-align: center;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+        header {
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-bottom: 2px solid #333;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+        }
+        nav {
+            margin-top: 10px;
+        }
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2em;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+            transition: border-bottom 0.3s ease, color 0.3s ease;
+        }
+        nav a:hover {
+            border-bottom: 2px solid #e0e0e0;
+            color: #f0f0f0;
+        }
+        section {
+            padding: 50px 20px;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        .section-title {
+            font-size: 2.5em;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .section-content {
+            font-size: 1.2em;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        .about-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+        }
+        .about-text {
+            flex: 1;
+            text-align: left;
+        }
+        .about-photo {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .about-photo img {
+            max-width: 50%;
+            height: auto;
+            border-radius: 50px;
+        }
+        .skills-grid, .achievements-list, .certificates-list, .projects-list, .education-list {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            justify-content: center;
+            padding: 0;
+        }
+        .skill-card, .achievement-card, .certificate-card, .project-card, .education-card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            font-family: 'Roboto', sans-serif;
+        }
+        .skill-card::before, .achievement-card::before, .certificate-card::before, .project-card::before, .education-card::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+        .skill-card:hover::before, .achievement-card:hover::before, .certificate-card:hover::before, .project-card:hover::before, .education-card:hover::before {
+            opacity: 1;
+        }
+        .skill-card:hover, .achievement-card:hover, .certificate-card:hover, .project-card:hover, .education-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 255, 255, 0.5);
+        }
+        .skill-card h3, .achievement-card h3, .certificate-card h3, .project-card h3, .education-card h3 {
+            margin-top: 0;
+            font-size: 1.6em;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+        }
+        .skill-card p, .achievement-card p, .certificate-card p, .project-card p, .education-card p {
+            font-size: 1.1em;
+        }
+        footer {
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-top: 2px solid #333;
+            position: relative;
+        }
+        footer p {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .contact-form {
+            max-width: 600px;
+            margin: auto;
+            text-align: left;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .contact-form button {
+            background-color: #333;
+            border: none;
+            color: #e0e0e0;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+        }
+        .contact-form button:hover {
+            background-color: #555;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .about-photo {
+                margin-top: 20px;
+            }
+        }
+
+        /* SVG Background Style */
+        .background-svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .shape-fill {
+            fill: #1e1e1e;
+        }
+        .certificate-card a {
+            color: #00bcd4;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+        .certificate-card a:hover {
+            color: #e0e0e0;
+        }
+        .education-list {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    justify-content: center;
+    padding: 0;
+}
+
+.education-card {
+    display: flex;
+    align-items: center;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+}
+
+.education-logo {
+    max-width: 80px;
+    height: auto;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.education-info {
+    flex: 1;
+}
+
+.education-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 255, 255, 0.5);
+}
+.contact-link {
+    color: #00bcd4;
+    text-decoration: none;
+    background-color: #333;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-size: 1.3em;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.contact-link:hover {
+    background-color: #555;
+    color: #e0e0e0;
+}
+
+    .resume-button {
+        display: inline-block;
+        background-color: #74ebfb;
+        color: #030303;
+        padding: 10px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1.3em;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .resume-button:hover,
+    .resume-button:focus {
+        background-color: #75e9f9; /* Darker shade on hover */
+        box-shadow: 0 0 20px rgba(84, 231, 250, 0.8), 0 0 30px rgba(0, 188, 212, 0.5);
+    }
+    .social-icons img {
+    width: 50px; /* Adjust this value for desired width */
+    height: 50px; /* Adjust this value for desired height */
+    transition: transform 0.3s ease;
+    margin: 9px 9px;
+}
+
+</style>
+</head>
+<body>
+    <header>
+        <h1>My Portfolio</h1>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#achievements">Achievements</a>
+            <a href="#certificates">Certificates</a>
+            <a href="#education">Education</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <svg class="background-svg" viewBox="0 0 1200 800" preserveAspectRatio="none">
+        <path d="M0,800V200C150,300 300,200 500,250C700,300 850,400 1200,200V800Z" class="shape-fill"></path>
+    </svg>
+    <section id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">Hi all, I'm Ankur</h2>
+                    <p class="section-content">I’m a passionate developer with a keen interest in building modern web applications. I have experience in various technologies including HTML, CSS, JavaScript, and React. I’m always eager to learn and take on new challenges. My goal is to create impactful software solutions and continually enhance my skills in the tech field.</p>
+    
+                    <!-- Contact Information with clickable links -->
+                    <p><strong>Email:</strong> <a href="mailto:talk2ankur2002@gmail.com" class="contact-link">talk2ankur2002@gmail.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+918381805727" class="contact-link">+91-8381805727</a></p>
+                    
+                    <div class="social-icons">
+                        <a href="https://www.linkedin.com/in/ankur-singh-40653922b/" target="_blank">
+                            <img src="images/linkedin.png" alt="LinkedIn Logo">
+                        </a>
+                        <a href="https://github.com/Ankursingh157" target="_blank">
+                            <img src="images/github.png" alt="GitHub Logo">
+                        </a>
+                        
+                    </div>
+                                      
+    
+                    
+                   <!-- Resume Download Button -->
+                    <a href="Resume/RESUME.pdf" target="_blank" class="resume-button">My Resume</a>
+                </div>
+                <div class="about-photo">
+                    <img src="images/portfoliopic.jpg" alt="Profile Photo">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>HTML</h3>
+                    <p>Experienced in creating well-structured and semantic HTML documents.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>CSS</h3>
+                    <p>Proficient in designing responsive layouts and styling web pages.</p>
+                </div>
+                
+                <div class="skill-card">
+                    <h3>JavaScript</h3>
+                    <p>Skilled in adding interactivity and dynamic features to web applications.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Python</h3>
+                    <p>Proficient in Python for scripting, automation, and back-end development.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Java</h3>
+                    <p>Experience with object-oriented programming and building scalable applications using Java.</p>
+                </div>
+                
+                <div class="skill-card">
+                    <h3>SQL</h3>
+                    <p>Skilled in writing SQL queries to manage and analyze data in relational databases.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>React</h3>
+                    <p>Experience with building interactive UIs and single-page applications.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Testing & Debugging</h3>
+                    <p>Skilled in writing unit tests, debugging code, and ensuring application stability.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements">
+        <div class="container">
+            <h2 class="section-title">Achievements</h2>
+            <div class="achievements-list">
+                <div class="achievement-card">
+                    <h3>Badge by IBM</h3>
+                    <p>Received a badge by IBM in recognition of the commitment to achieve professional excellence in Python for Data Science.</p>
+
+                </div>
+                <div class="achievement-card">
+                    <h3>Smart India Hackathon</h3>
+                    <p>Became a Finalist in Smart India internal Hackathon-2024.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certificates">
+        <div class="container">
+            <h2 class="section-title">Certificates</h2>
+            <div class="certificates-list">
+                <div class="certificate-card">
+                    <h3>Certificate in Website setup from Scratch</h3>
+                    <p>Completed a comprehensive course on web development.</p>
+                    <p>Jan-2024</p>
+                    <a href="certificates\eduonix certificate.pdf" target="_blank">View Certificate</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>Certificate in Python machine Learning</h3>
+                    <p>Completed a comprehensive course on Python machine learning :From beginner to Pro.</p>
+                    <p>Aug-2024</p>
+                    <a href="certificates\udamy python certificate.pdf" target="_blank">View Certificate</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>Certificate in Java</h3>
+                    <p>Completed a comprehensive course on Java programming Masterclass-Beginner to Master.</p>
+                    <p>Sept-2024</p>
+                    <a href="certificates\java.certificate.pdf" target="_blank">View Certificate</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>Certificate in HTML</h3>
+                    <p>Successfully completed and received passing grade in Creating a simple Webpage in HTML in 10 minutes.</p>
+                    <p>aug-2024</p>
+                    <a href="certificates\java.certificate.pdf" target="_blank">View Certificate</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>Certificate in Python-Data Science </h3>
+                    <p>Completed a comprehensive course on Python 101 for Data Science.</p>
+                    <p>Aug-2024</p>
+                    <a href="certificates\java.certificate.pdf" target="_blank">View Certificate</a>
+                </div>
+                <div class="certificate-card">
+                    <h3>Certificate in Python.</h3>
+                    <p>Completed a comprehensive course on Data Visulization with Python.</p>
+                    <p>Feb-2022</p>
+                    <a href="certificates\python certificate.pdf" target="_blank">View Certificate</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="education">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <div class="education-list">
+                <div class="education-card">
+                    <img src="images\pietimg.png" alt="Panipat Institute of Engineering and Technology Logo" class="education-logo">
+                    <div class="education-info">
+                        <h3>B.Tech. in Information Technology</h3>
+                        <p>Panipat Institute of Engineering and Technology</p>
+                        <p>July 2021-July 2025</p>
+                    </div>
+                </div>
+                <div class="education-card">
+                    <img src="images\rlbimg.png" alt="Rani Laxmi Bai Memorial School Logo" class="education-logo">
+                    <div class="education-info">
+                        <h3>Intermediate (12th) Grade</h3>
+                        <p>Rani Laxmi Bai Memorial School</p>
+                        <p>July 2019-March 2020</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-list">
+                <div class="project-card">
+                    <h3>Portfolio Website</h3>
+                    <p>Developed a personal portfolio website to showcase my skills , achievements , education and projects.</p>
+                </div>
+                <div class="project-card">
+                    <h3>E-commerce Website </h3>
+                    <p>Created an e-commerce website to help small scale shops to sell their products to large number of people.</p>
+                </div>
+                <div class="project-card">
+                    <h3>E-course website </h3>
+                    <p>Created an e-commerce website to sell E-courses online.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-form">
+                <form action="mailto:your-email@example.com" method="post" enctype="text/plain">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Ankur's Portfolio. All rights reserved.</p>
+    </footer>
+</body>
+</html>
